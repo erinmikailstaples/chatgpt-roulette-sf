@@ -1,4 +1,17 @@
 [build]
+base = "."
+command = "yarn build"
+publish = "out"
+
+[build.environment]
+NODE_VERSION = "18"
+
+[[redirects]]
+from = "/*"
+to = "/404"
+status = 200
+
+[build]
 command = "npm run build"
 environment = { NODE_VERSION = "18"}
 functions = "netlify/functions"
