@@ -49,64 +49,42 @@ function debounce(func, wait) {
     };
 }
 
-// Function to fetch data from the Netlify function
-async function fetchSlides() {
-    // const url = `/.netlify/functions/unsplash?query=${encodeURIComponent(searchTerm)}&slides=${numberOfSlides}`;
-    const url = `/.netlify/functions/unsplash?query=${searchTerm}&slides=${numberOfSlides}`;
-    // console.log(`Constructed URL: ${url}`); // Log to ensure it's correct
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        console.log('Unsplash API Response:', data); // Log the API response
-        generateSlides(data); // Use the data to generate slides
-    } catch (error) {
-        console.error('Error fetching data from Netlify function:', error);
-        alert('An error occurred while fetching slides. Please try again later.');
+async function generateSlideContent() {
+  try {
+    const response = await fetch('/.netlify/functions/aiService');
+    const data = await response.json();
+    
+    if (!data.imageUrl) {
+      throw new Error('No image URL received');
     }
+
+    // Create a new slide with the AI-generated content
+    const slide = document.createElement('section');
+    slide.setAttribute('data-background-image', data.imageUrl);
+    slide.setAttribute('data-background-size', 'contain');
+    slide.setAttribute('data-background-position', 'center');
+    
+    slide.innerHTML = `
+      <h2>${data.title}</h2>
+      <div class="desc">
+        <font size="3rem;" color="white">
+          AI-generated presentation slide
+        </font>
+      </div>`;
+    
+    autogenSlidesElement.appendChild(slide);
+    Reveal.sync();
+  } catch (error) {
+    console.error('Error generating slide content:', error);
+  }
 }
 
-// Function to generate slides dynamically
-function generateSlides(photos) {
-    console.log('Photos Data:', photos);
-
-    const slideTitle = document.createElement('section');
-    slideTitle.setAttribute('data-background-image','https://picsum.photos/1920/1080/')
-    slideTitle.setAttribute('data-background-size', 'contain');
-    slideTitle.setAttribute('data-background-position', 'center');
-    slideTitle.setAttribute('data-background-opacity', '0.5');
-        slideTitle.innerHTML = `<h3>${searchTerm}</h3>`;
-
-    autogenSlidesElement.appendChild(slideTitle);
-
-    photos.forEach(photo => {
-        if (photo && photo.urls && photo.urls.regular) { // Ensure the required properties exist
-            // Create a new slide element (section)
-            const slide = document.createElement('section');
-
-            // Add custom data attributes to the section tag
-            slide.setAttribute('data-background-image', photo.urls.regular);
-            slide.setAttribute('data-background-size', 'contain');
-            slide.setAttribute('data-background-position', 'center');
-            slide.setAttribute('data-author', photo.user.name); // Author's name
-            slide.setAttribute('data-location', photo.location ? photo.location.name : 'Unknown'); // Location (if available)
-            slide.setAttribute('data-created-at', photo.created_at); // Photo creation date
-
-            slide.innerHTML = `
-                <div class="desc">
-                    <font size="3rem;" color="white">
-                        Photo by <a href="${photo.user.links.html}?utm_source=Jerdog_PPT_Karaoke&utm_medium=referral" target="_blank">${photo.user.name}</a> on <a href="https://unsplash.com/?utm_source=Jerdog_PPT_Karaoke&utm_medium=referral" target="_blank">Unsplash</a>
-                    </font>
-                </div>`;
-            autogenSlidesElement.appendChild(slide);
-            Reveal.sync(); // Sync Reveal.js after dynamically adding content
-        } else {
-            console.warn('Missing photo data:', photo); // Log missing or malformed data
-        }
-    });
+// Modify the existing fetchSlides function to use our new generator
+async function fetchSlides() {
+  const slides = [];
+  for (let i = 0; i < numberOfSlides; i++) {
+    await generateSlideContent();
+  }
 }
 
 // function to get random talk title

@@ -1,4 +1,6 @@
-# PowerPoint Karaoke + Unsplash API
+
+# ChatGPT Roulette
+PowerPoint Karaoke + Unsplash API
 
 ## Overview
 
@@ -29,6 +31,7 @@ File descriptions:
 ```
 - `netlify/functions/unsplash.js` - the Unsplash API Netlify Function that is used to pull images from Unsplash. You will need to edit this file to include your Unsplash API key.
 - `netlify/functions/randomTalkTitle.js` - random talk title pulled from the `netlify/functions/talkTitles.json` file. Edit the `talkTitles.json` file with your own talk titles.
+- `netlify/functions/aiService.js` - the AI service that is used to generate the talk title and image prompt.
 - `netlify.toml` - the Netlify configuration file. By default, this is the bare minimum needed to build the project on Netlify.
 
 
