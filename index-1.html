@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>PPT Karaoke | Unsplash</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			div.overlay { position:absolute; bottom:0; right:0; z-index: 1000;}
+			.reveal h1, .reveal h2 { text-shadow: black 2px 5px;}
+			.reveal img {max-height: 60vh;}
+			.reveal div.desc { position:fixed; bottom:0; width:100%; display: flex; justify-content: center; z-index: 2000;}
+		</style>
+	</head>
+	<body>
+		<div id="searchTerms" data-query="AI driven cars"></div>
+		<div class="reveal">
+			<div class="slides" id="slides-container">
+				<div class="overlay">
+					<img src="img/placeholder_logo.png" width="100px">
+				</div>
+				<!-- <section data-background-image="https://picsum.photos/1920/1080/" data-background-size="cover">
+                    <h1>[Presentation title]</h1>
+					<h2>Checking too</h2>
+				</section> -->
+				<section id="autogenSlides">
+					<!-- Slides will be inserted here dynamically -->
+				</section>
+				<section>
+					<h1>End</h1>
+				</section>
+			</div>
+		</div>
+
+	<!-- Reveal.js scripts -->
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+	<!-- Custom JS module for Unsplash integration -->
+		<script type="module" src="./index.js"></script>
+	</body>
+</html>

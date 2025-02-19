@@ -1,0 +1,20 @@
+.idea/
+*.iml
+*.iws
+*.eml
+out/
+dist/
+.DS_Store
+.svn
+log/*.log
+tmp/**
+node_modules/
+.sass-cache
+.env
+# Local Netlify folder
+.netlify
+<<<<<<< HEAD
+.vscode
+=======
+.vscode
+>>>>>>> b21a3d21428a22e847d4ad34eac485e2ada30c53
