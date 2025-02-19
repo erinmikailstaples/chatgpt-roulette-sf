@@ -1,5 +1,23 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+
+// Add this temporary debug log
+console.log('Current working directory:', process.cwd());
+console.log('Environment variables:', {
+  NODE_ENV: process.env.NODE_ENV,
+  OPENAI_KEY_EXISTS: !!process.env.OPENAI_API_KEY,
+  REPLICATE_TOKEN_EXISTS: !!process.env.REPLICATE_API_TOKEN
+});
+
 const OpenAI = require('openai');
 const Replicate = require('replicate');
+
+// Add this debug log
+console.log('Environment variables check:', {
+  hasOpenAIKey: !!process.env.OPENAI_API_KEY,
+  openAIKeyLength: process.env.OPENAI_API_KEY?.length,
+  hasReplicateToken: !!process.env.REPLICATE_API_TOKEN
+});
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY

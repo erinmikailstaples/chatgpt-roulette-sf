@@ -6,7 +6,19 @@ functions = "netlify/functions"
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  included_files = ["node_modules/**"]
+  external_node_modules = ["openai", "replicate", "node-fetch"]
+  included_files = []
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_FLAGS = "--no-package-lock"
+
+[dev]
+  command = "npm run dev"
+  targetPort = 8888
+  publish = "public"
+  framework = "#custom"
+  autoLaunch = true
 
 [context.production.environment]
   NODE_VERSION = "18"

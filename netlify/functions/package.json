@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "openai": "^4.85.2",
+    "replicate": "^1.0.1"
+  }
+} 

@@ -56,7 +56,11 @@
     "rollup": "^4.24.0",
     "sass": "^1.79.5",
     "through2": "^4.0.2",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "dotenv": "^16.4.7",
+    "netlify-cli": "*",
+    "openai": "^4.85.2",
+    "replicate": "^1.0.1"
   },
   "overrides": {
     "gulp-connect": {
@@ -105,9 +109,5 @@
       "no-unused-expressions": 0
     }
   },
-  "dependencies": {
-    "netlify-cli": "*",
-    "openai": "^4.85.2",
-    "replicate": "^1.0.1"
-  }
+  "dependencies": {}
 }
