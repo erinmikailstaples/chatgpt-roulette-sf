@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>PPT Karaoke | AI Generator</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			div.overlay { position:absolute; bottom:0; right:0; z-index: 1000;}
+			.reveal h1, .reveal h2 { text-shadow: black 2px 5px;}
+			.reveal img {max-height: 60vh;}
+			.reveal div.desc { position:fixed; bottom:0; width:100%; display: flex; justify-content: center; z-index: 2000;}
+            /* Add styles for the generate button */
+            #generateButton {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 3000;
+                padding: 10px 20px;
+                background-color: #8b5cf6;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+            #generateButton:hover {
+                background-color: #7c3aed;
+            }
+            .loading {
+                opacity: 0.5;
+                cursor: wait;
+            }
+		</style>
+	</head>
+	<body>
+		<div id="searchTerms" data-query="AI driven cars"></div>
+		<button id="generateButton">Generate New Presentation</button>
+		<div class="reveal">
+			<div class="slides" id="slides-container">
+				<div class="overlay">
+					<img src="img/placeholder_logo.png" width="100px">
+				</div>
+				<!-- <section data-background-image="https://picsum.photos/1920/1080/" data-background-size="cover">
+                    <h1>[Presentation title]</h1>
+					<h2>Checking too</h2>
+				</section> -->
+				<section id="autogenSlides">
+					<!-- Slides will be inserted here dynamically -->
+				</section>
+				<section>
+					<h1>End</h1>
+				</section>
+			</div>
+		</div>
+
+	<!-- Reveal.js scripts -->
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<!-- Add the fullscreen plugin -->
+		<script src="plugin/fullscreen/fullscreen.js"></script>
+	<!-- Custom JS module for Unsplash integration -->
+		<script type="module">
+            import { generateSlideContent } from './index.js';
+
+            // Initialize Reveal.js with the fullscreen plugin
+            Reveal.initialize({
+                hash: true,
+                plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealFullscreen ],
+                width: '70%',
+                height: '100%',
+                margin: 0.1,
+                controls: true,
+                progress: true,
+                slideNumber: true,
+                keyboard: true,
+                overview: true,
+                center: true,
+                touch: true,
+                loop: false,
+                rtl: false,
+                shuffle: false,
+                fragments: true,
+                embedded: false,
+                help: true,
+                showNotes: false,
+                autoPlayMedia: null,
+                autoSlide: 0,
+                autoSlideStoppable: true,
+                mouseWheel: false,
+                hideAddressBar: true,
+                previewLinks: false,
+                fullscreen: {
+                    enabled: true,
+                    trigger: 70 // Press 'f' to go fullscreen
+                }
+            });
+
+            // Function to generate multiple slides
+            async function generatePresentation() {
+                const button = document.getElementById('generateButton');
+                const slidesContainer = document.getElementById('autogenSlides');
+                
+                // Disable button and show loading state
+                button.disabled = true;
+                button.classList.add('loading');
+                button.textContent = 'Generating...';
+                
+                try {
+                    // Clear existing slides
+                    slidesContainer.innerHTML = '';
+                    
+                    // Generate 11 slides
+                    for (let i = 0; i < 11; i++) {
+                        await generateSlideContent();
+                        await new Promise(resolve => setTimeout(resolve, 1000)); // Delay between slides
+                    }
+                    
+                    // Sync Reveal.js to show new slides
+                    Reveal.sync();
+                    Reveal.slide(0);
+                } catch (error) {
+                    console.error('Error generating presentation:', error);
+                } finally {
+                    // Reset button state
+                    button.disabled = false;
+                    button.classList.remove('loading');
+                    button.textContent = 'Generate New Presentation';
+                }
+            }
+
+            // Add click handler to the generate button
+            document.getElementById('generateButton').addEventListener('click', generatePresentation);
+        </script>
+	</body>
+</html>

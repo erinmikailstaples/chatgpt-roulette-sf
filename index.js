@@ -49,7 +49,8 @@ function debounce(func, wait) {
     };
 }
 
-async function generateSlideContent() {
+// Export the generateSlideContent function
+export async function generateSlideContent() {
   try {
     const response = await fetch('/.netlify/functions/aiService');
     const data = await response.json();
@@ -72,8 +73,8 @@ async function generateSlideContent() {
         </font>
       </div>`;
     
-    autogenSlidesElement.appendChild(slide);
-    Reveal.sync();
+    document.getElementById('autogenSlides').appendChild(slide);
+    return slide;
   } catch (error) {
     console.error('Error generating slide content:', error);
   }
