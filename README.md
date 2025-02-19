@@ -75,4 +75,4 @@ If you want to have this project deployed to Netlify, you will need to do the fo
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.# chatgpt-roulette-sf
