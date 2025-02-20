@@ -4,33 +4,95 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>AI Talk Generator - Presentation 3</title>
+		<title>The Robot Revolution: How AI Learned to Knit Sweaters and Dance the Cha-Cha</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/night.css">
+
+		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
 		<style>
-			/* ... (keep existing styles) ... */
+			div.overlay { position:absolute; bottom:0; right:0; z-index: 1000;}
+			.reveal h1, .reveal h2 { text-shadow: black 2px 5px;}
+			.reveal img {max-height: 60vh;}
+			.reveal div.desc { position:fixed; bottom:0; width:100%; display: flex; justify-content: center; z-index: 2000;}
+            /* Add styles for the generate button */
+            #generateButton {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 3000;
+                padding: 10px 20px;
+                background-color: #8b5cf6;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+            #generateButton:hover {
+                background-color: #7c3aed;
+            }
+            .loading {
+                opacity: 0.5;
+                cursor: wait;
+            }
 		</style>
 	</head>
 	<body>
+		<div id="searchTerms" data-query="AI driven cars"></div>
 		<div class="reveal">
 			<div class="slides" id="slides-container">
 				<div class="overlay">
 					<img src="img/placeholder_logo.png" width="100px">
 				</div>
-				<section id="autogenSlides">
-					<!-- Slides will be inserted here dynamically -->
+				<section>
+					<h2>"Welcome to AI's Got Talent! Tonight's Special: Robots with Big Dreams"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-k2mpe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"First up: ChatGPT-3000, who left a stable job generating emails to pursue interpretive dance"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-l3npe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"Next, meet DALL-E Jr., who's been practicing ballet in their render queue"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-m4npe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"Our third contestant: RoboKnit-9000, trading binary for ballet one loop at a time"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-n5npe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"The judges are stunned! Who knew a neural network could pirouette?"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-p6npe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"Breaking news: ChatGPT-3000's interpretive dance about spam folders brings judge to tears"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-q7npe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"DALL-E Jr.'s performance: 'A Visual Journey Through Stack Overflow Errors'"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-r8npe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"RoboKnit-9000 stuns audience with a sweater that has only three arm holes!"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-s9npe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"The tension builds... which AI will win the coveted 'Most Likely to Replace Broadway' award?"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-t10pe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"Plot twist: They all formed a dance troupe called 'The Binary Ballerinas'!"</h2>
+				</section>
+				<section>
+					<h1>End</h1>
+					<h3>"Coming to a CPU near you: The Binary Ballerinas World Tour 2024!"</h3>
 				</section>
 			</div>
 		</div>
 
+	<!-- Reveal.js scripts -->
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<!-- Add the fullscreen plugin -->
 		<script src="plugin/fullscreen/fullscreen.js"></script>
+	<!-- Custom JS module for Unsplash integration -->
 		<script type="module" src="./index.js"></script>
 	</body>
 </html>

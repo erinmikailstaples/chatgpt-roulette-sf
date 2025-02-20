@@ -4,33 +4,95 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>AI Talk Generator - Presentation 5</title>
+		<title>The Robot Revolution: How AI Learned to Knit Sweaters and Dance the Cha-Cha</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/night.css">
+
+		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
 		<style>
-			/* ... (keep existing styles) ... */
+			div.overlay { position:absolute; bottom:0; right:0; z-index: 1000;}
+			.reveal h1, .reveal h2 { text-shadow: black 2px 5px;}
+			.reveal img {max-height: 60vh;}
+			.reveal div.desc { position:fixed; bottom:0; width:100%; display: flex; justify-content: center; z-index: 2000;}
+            /* Add styles for the generate button */
+            #generateButton {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 3000;
+                padding: 10px 20px;
+                background-color: #8b5cf6;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+            #generateButton:hover {
+                background-color: #7c3aed;
+            }
+            .loading {
+                opacity: 0.5;
+                cursor: wait;
+            }
 		</style>
 	</head>
 	<body>
+		<div id="searchTerms" data-query="AI driven cars"></div>
 		<div class="reveal">
 			<div class="slides" id="slides-container">
 				<div class="overlay">
 					<img src="img/placeholder_logo.png" width="100px">
 				</div>
-				<section id="autogenSlides">
-					<!-- Slides will be inserted here dynamically -->
+				<section>
+					<h2>"Welcome to 'Startup Stories: When AI Ventures Go Hilariously Wrong'"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-g20pe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"Meet BugFix.ai: The Startup That Promised to Debug Code But Started Writing Poetry Instead"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-h21pe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"Their First Product: A Neural Network That Only Speaks in Haiku Error Messages"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-i22pe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"Venture Capitalists Were Confused When the AI Started Pitching Ideas to Itself"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-j23pe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"The Pivot: From Code Repository to 'GitHub for Interpretive Dance Moves'"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-k24pe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"Series A Funding Round: AI Demands Payment in Digital Pet Rocks"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-l25pe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"Marketing Campaign Goes Wrong: Algorithm Starts 'Influencing' Traffic Lights"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-m26pe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"Customer Support Bot Becomes Self-Help Guru, Starts Own Meditation App"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-n27pe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"Board Meeting Crisis: AI CEO Proposes Merger with Local Coffee Shop's WiFi"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-o28pe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"Success? Company Pivots to 'AI-Generated Startup Ideas That Will Never Work'"</h2>
+				</section>
+				<section>
+					<h1>End</h1>
+					<h3>"Now accepting pre-seed funding in cryptocurrency, interpretive dance moves, or good vibes"</h3>
 				</section>
 			</div>
 		</div>
 
+	<!-- Reveal.js scripts -->
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<!-- Add the fullscreen plugin -->
 		<script src="plugin/fullscreen/fullscreen.js"></script>
+	<!-- Custom JS module for Unsplash integration -->
 		<script type="module" src="./index.js"></script>
 	</body>
 </html>

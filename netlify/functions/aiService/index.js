@@ -1,5 +1,7 @@
 const OpenAI = require('openai');
 const Replicate = require('replicate');
+const fs = require('fs').promises;
+const path = require('path');
 
 // Add debug logging for environment variables
 console.log('Environment check:', {
@@ -64,7 +66,30 @@ async function generatePresentationStructure(title) {
   return JSON.parse(structureResponse.choices[0].message.content);
 }
 
-async function generateImage(imagePrompt) {
+async function saveImage(imageUrl, presentationNumber, slideIndex) {
+  try {
+    // Download the image
+    const response = await fetch(imageUrl);
+    const buffer = await response.arrayBuffer();
+    
+    // Create the directory if it doesn't exist
+    const dirPath = path.join(process.cwd(), 'img', 'presentations', `p${presentationNumber}`);
+    await fs.mkdir(dirPath, { recursive: true });
+    
+    // Save the image
+    const filename = `slide_${slideIndex}.webp`;
+    const filePath = path.join(dirPath, filename);
+    await fs.writeFile(filePath, Buffer.from(buffer));
+    
+    // Return the relative path for the frontend
+    return `/img/presentations/p${presentationNumber}/${filename}`;
+  } catch (error) {
+    console.error('Error saving image:', error);
+    throw error;
+  }
+}
+
+async function generateImage(imagePrompt, presentationNumber, slideIndex) {
   const prediction = await replicate.predictions.create({
     version: "black-forest-labs/flux-schnell",
     input: {
@@ -76,7 +101,8 @@ async function generateImage(imagePrompt) {
   });
 
   const finalPrediction = await waitForImageGeneration(prediction);
-  return finalPrediction.output;
+  const localPath = await saveImage(finalPrediction.output, presentationNumber, slideIndex);
+  return localPath;
 }
 
 exports.handler = async function(event, context) {
@@ -107,7 +133,7 @@ exports.handler = async function(event, context) {
     // Generate images for all slides
     const slides = await Promise.all(presentationStructure.slides.map(async (slide, index) => {
       console.log(`Generating image for slide ${index + 1}`);
-      const imageUrl = await generateImage(slide.imagePrompt);
+      const imageUrl = await generateImage(slide.imagePrompt, presentationNumber, index);
       return {
         ...slide,
         imageUrl

@@ -4,33 +4,97 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>AI Talk Generator - Presentation 6</title>
+		<title>The Robot Revolution: How AI Learned to Knit Sweaters and Dance the Cha-Cha</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/night.css">
+
+		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
 		<style>
-			/* ... (keep existing styles) ... */
+			div.overlay { position:absolute; bottom:0; right:0; z-index: 1000;}
+			.reveal h1, .reveal h2 { text-shadow: black 2px 5px;}
+			.reveal img {max-height: 60vh;}
+			.reveal div.desc { position:fixed; bottom:0; width:100%; display: flex; justify-content: center; z-index: 2000;}
+            /* Add styles for the generate button */
+            #generateButton {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 3000;
+                padding: 10px 20px;
+                background-color: #8b5cf6;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+            #generateButton:hover {
+                background-color: #7c3aed;
+            }
+            .loading {
+                opacity: 0.5;
+                cursor: wait;
+            }
 		</style>
 	</head>
 	<body>
+		<div id="searchTerms" data-query="AI driven cars"></div>
 		<div class="reveal">
 			<div class="slides" id="slides-container">
 				<div class="overlay">
 					<img src="img/placeholder_logo.png" width="100px">
-				</div>
-				<section id="autogenSlides">
-					<!-- Slides will be inserted here dynamically -->
+
+					<h2>"Overengineered Solutions: When AI Takes Simple Problems Way Too Far"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-p29pe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"Introducing ToasterGPT: The AI That Uses Quantum Computing to Perfect Your Toast"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-q30pe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"Breaking: AI Builds Blockchain-Based Network to Track Which Sock Goes With Which"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-r31pe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"Neural Network Spends 2 Million Computing Hours to Determine Why Plants Need Water"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-s32pe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"AI Creates 500-Page Whitepaper on Optimal Cookie Dunking Duration in Milk"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-t33pe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"Machine Learning Model Uses Satellite Data to Decide What to Watch on Netflix"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-u34pe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"Robot Develops Complex Algorithm to Determine If It's Really Hot Outside or Just You"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-v35pe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"AI Creates Distributed System of Smart Contracts to Automate 'Who's Turn to Do Dishes'"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-w36pe7fd85rme0cn44drz6j8kr-1.png">
+					<h2>"Deep Learning Model Analyzes 1M Cat Videos to Perfect the Art of Opening a Can"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-x37pe7fd85rme0cn44drz6j8kr-2.png">
+					<h2>"GPT-4 Writes 10,000-Word Essay on Why Scissors Beat Paper in Rock, Paper, Scissors"</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-y38pe7fd85rme0cn44drz6j8kr-0.png">
+					<h2>"AI's Final Solution: Using Quantum Entanglement to Find Missing TV Remote"</h2>
+				</section>
+				<section>
+					<h1>End</h1>
+					<h3>"This presentation was generated using only 47 supercomputers and a rubber duck"</h3>
 				</section>
 			</div>
 		</div>
 
+	<!-- Reveal.js scripts -->
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<!-- Add the fullscreen plugin -->
 		<script src="plugin/fullscreen/fullscreen.js"></script>
+	<!-- Custom JS module for Unsplash integration -->
 		<script type="module" src="./index.js"></script>
 	</body>
 </html>

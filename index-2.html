@@ -4,33 +4,95 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>AI Talk Generator - Presentation 2</title>
+		<title>The Robot Revolution: How AI Learned to Knit Sweaters and Dance the Cha-Cha</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/night.css">
+
+		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
 		<style>
-			/* ... (keep existing styles) ... */
+			div.overlay { position:absolute; bottom:0; right:0; z-index: 1000;}
+			.reveal h1, .reveal h2 { text-shadow: black 2px 5px;}
+			.reveal img {max-height: 60vh;}
+			.reveal div.desc { position:fixed; bottom:0; width:100%; display: flex; justify-content: center; z-index: 2000;}
+            /* Add styles for the generate button */
+            #generateButton {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 3000;
+                padding: 10px 20px;
+                background-color: #8b5cf6;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+            #generateButton:hover {
+                background-color: #7c3aed;
+            }
+            .loading {
+                opacity: 0.5;
+                cursor: wait;
+            }
 		</style>
 	</head>
 	<body>
+		<div id="searchTerms" data-query="AI driven cars"></div>
 		<div class="reveal">
 			<div class="slides" id="slides-container">
 				<div class="overlay">
 					<img src="img/placeholder_logo.png" width="100px">
 				</div>
-				<section id="autogenSlides">
-					<!-- Slides will be inserted here dynamically -->
+				<section>
+					<h2>When Robots Got Rhythm: A Journey into AI's Artistic Identity Crisis</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-gmped7fd85rme0cn44drz6j8kr-0.png">
+					<h2>From Binary to Ballet: How AI Learned to Point Its Toes</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-gmped7fd85rme0cn44drz6j8kr-1.png">
+					<h2>Knit One, Parse Two: AI's Adventures in Digital Crafting</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-jsthbv115nrme0cn44da2rqe8w-2.png">
+					<h2>The Great Robot Talent Show: From Glitches to Graceful</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-q6zaaw46csrmc0cn44dtyt66j4-3.png">
+					<h2>Error 404: Dance Move Not Found (But We're Learning!)</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-vwsew7yc85rmc0cn446rcacew4-3.png">
+					<h2>Sweater Weather in Silicon Valley: AI's Fashion Faux Pas</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-jsthbv115nrme0cn44da2rqe8w-3.png">
+					<h2>The Three Laws of Robotics... Plus Jazz Hands!</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-vwsew7yc85rmc0cn446rcacew4-0.png">
+					<h2>When AI Met Martha Stewart: A Story of Creative Chaos</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-vwsew7yc85rmc0cn446rcacew4-1.png">
+					<h2>Dancing in the Data: How Algorithms Found Their Groove</h2>
+				</section>
+				<section data-background-cover="img/replicate-prediction-vwsew7yc85rmc0cn446rcacew4-2.png">
+					<h2>The Future is Fabulous: AI's Journey from Bugs to Ballroom</h2>
+				</section>
+				<section>
+					<h1>End</h1>
+					<!-- Narrator: "Thank you for attending my TED Talk. The robots made me say that." -->
 				</section>
 			</div>
 		</div>
 
+	<!-- Reveal.js scripts -->
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<!-- Add the fullscreen plugin -->
 		<script src="plugin/fullscreen/fullscreen.js"></script>
+	<!-- Custom JS module for Unsplash integration -->
 		<script type="module" src="./index.js"></script>
 	</body>
 </html>
