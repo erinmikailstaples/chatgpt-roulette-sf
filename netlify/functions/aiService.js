@@ -35,12 +35,13 @@ exports.handler = async function(event, context) {
     };
   }
 
-  try {
-    // Log environment variables presence (not the values!)
-    console.log('Environment check:', {
-      hasOpenAI: !!process.env.OPENAI_API_KEY,
-      hasReplicate: !!process.env.REPLICATE_API_TOKEN
-    });
+try {
+// Validate environment variables
+if (!process.env.OPENAI_API_KEY || !process.env.REPLICATE_API_TOKEN) {
+    throw new Error('Missing required environment variables');
+}
+
+console.log('Starting API request process...');
 
     // Generate a title using OpenAI
     const titleResponse = await openai.chat.completions.create({
@@ -55,10 +56,14 @@ exports.handler = async function(event, context) {
       temperature: 0.9,
     });
 
-    // Log successful title generation
-    console.log('Title generated successfully');
+    // Validate OpenAI response
+    if (!titleResponse?.choices?.[0]?.message?.content) {
+    console.error('Invalid title response structure:', titleResponse);
+    throw new Error('Failed to generate title: Invalid response structure');
+    }
 
     const title = titleResponse.choices[0].message.content;
+    console.log('Title generated successfully:', title);
 
     // Generate an image prompt using OpenAI
     const promptResponse = await openai.chat.completions.create({
@@ -73,9 +78,17 @@ exports.handler = async function(event, context) {
       temperature: 0.8,
     });
 
+    // Validate prompt response
+    if (!promptResponse?.choices?.[0]?.message?.content) {
+    console.error('Invalid prompt response structure:', promptResponse);
+    throw new Error('Failed to generate image prompt: Invalid response structure');
+    }
+
     const imagePrompt = promptResponse.choices[0].message.content;
+    console.log('Image prompt generated successfully:', imagePrompt);
 
     // Generate image using Replicate's Flux Schnella
+    console.log('Starting image generation with Replicate...');
     const image = await replicate.run("black-forest-labs/flux-schnell", {
       input: {
         prompt: imagePrompt,
@@ -85,28 +98,48 @@ exports.handler = async function(event, context) {
       }
     });
 
+    // Validate and process image response
+    if (!image) {
+    console.error('No image generated from Replicate');
+    throw new Error('Failed to generate image: Empty response');
+    }
+
+    const imageUrl = Array.isArray(image) ? image[0] : image;
+    console.log('Image generated successfully');
+
     return {
-      statusCode: 200,
-      body: JSON.stringify({
+    statusCode: 200,
+    body: JSON.stringify({
         title: title,
         imagePrompt: imagePrompt,
-        imageUrl: image
-      })
+        imageUrl: imageUrl
+    })
     };
-  } catch (error) {
-    // Enhanced error logging
-    console.error('Detailed error:', {
-      message: error.message,
-      stack: error.stack,
-      type: error.constructor.name
-    });
-    
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ 
-        error: error.message,
-        type: error.constructor.name
-      })
+} catch (error) {
+// Enhanced error logging with context
+console.error('API Service Error:', {
+    message: error.message,
+    type: error.constructor.name,
+    stack: error.stack,
+    responseError: error.response?.data, // Capture API response errors
+    status: error.response?.status
+});
+
+// Determine appropriate status code based on error type
+let statusCode = 500;
+if (error.message.includes('Missing required environment')) {
+    statusCode = 503; // Service Unavailable
+} else if (error.response?.status) {
+    statusCode = error.response.status;
+}
+
+return {
+    statusCode: statusCode,
+    body: JSON.stringify({ 
+    error: error.message,
+    type: error.constructor.name,
+    status: statusCode
+    })
     };
   }
 }; 
