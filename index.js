@@ -65,12 +65,28 @@ export async function generateSlideContent() {
     slide.setAttribute('data-background-size', 'contain');
     slide.setAttribute('data-background-position', 'center');
     
+    // Create HTML for bullets
+    const bulletPoints = data.bullets
+      ? data.bullets.map(bullet => `<li>${bullet}</li>`).join('')
+      : '';
+
     slide.innerHTML = `
-      <h2>${data.title}</h2>
-      <div class="desc">
-        <font size="3rem;" color="white">
-          AI-generated presentation slide
-        </font>
+      <div class="slide-content" style="
+        background: rgba(0, 0, 0, 0.7); 
+        padding: 20px; 
+        border-radius: 10px;
+        max-width: 80%;
+        margin: 0 auto;">
+        <h2 style="margin-bottom: 10px;">${data.title}</h2>
+        <h3 style="color: #8b5cf6; margin-bottom: 20px;">${data.subtitle || ''}</h3>
+        <ul style="text-align: left; list-style-type: none;">
+          ${bulletPoints}
+        </ul>
+        <div class="desc">
+          <font size="3rem;" color="white">
+            AI-generated presentation slide
+          </font>
+        </div>
       </div>`;
     
     document.getElementById('autogenSlides').appendChild(slide);

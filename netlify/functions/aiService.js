@@ -48,7 +48,7 @@ console.log('Starting API request process...');
       model: "gpt-3.5-turbo",
       messages: [{
         role: "system",
-        content: "You are a creative conference talk title generator. Generate a funny, engaging title for a tech talk."
+        content: "You are a creative conference talk title generator. Generate a funny, engaging title for a tech talk on AI or machine learning get weird with it and ridiculous with it."
       }, {
         role: "user",
         content: "Generate a tech conference talk title"
