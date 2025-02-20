@@ -39,94 +39,87 @@ async function waitForImageGeneration(prediction) {
   return prediction;
 }
 
+async function generatePresentationStructure(title) {
+  const structureResponse = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [{
+      role: "system",
+      content: `Create a coherent presentation structure for a tech talk titled "${title}".
+                Generate 8 slides including:
+                1. Title slide
+                2. Introduction/Overview
+                3-7. Main content slides
+                8. Conclusion/Summary
+                Format as JSON with array of slides, each containing:
+                - subtitle (string, max 10 words)
+                - bullets (array of strings, 2-3 points, max 15 words each)
+                - imagePrompt (string describing the ideal slide image)`
+    }, {
+      role: "user",
+      content: "Generate presentation structure"
+    }],
+    temperature: 0.8,
+  });
+
+  return JSON.parse(structureResponse.choices[0].message.content);
+}
+
+async function generateImage(imagePrompt) {
+  const prediction = await replicate.predictions.create({
+    version: "black-forest-labs/flux-schnell",
+    input: {
+      prompt: imagePrompt,
+      aspect_ratio: "16:9",
+      output_format: "webp",
+      output_quality: 90
+    }
+  });
+
+  const finalPrediction = await waitForImageGeneration(prediction);
+  return finalPrediction.output;
+}
+
 exports.handler = async function(event, context) {
   try {
-    // Validate environment variables first
-    if (!process.env.REPLICATE_API_TOKEN) {
-      throw new Error('Missing Replicate API token');
-    }
-
-    // First, generate a presentation title and topic
+    // Get presentation number from query params (1-6)
+    const presentationNumber = event.queryStringParameters?.presentation || '1';
+    
+    // Generate title
     const titleResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [{
         role: "system",
-        content: "You are a creative conference talk title generator. Generate a funny, engaging title for a tech talk."
+        content: "You are a creative conference talk title generator. Generate a funny, engaging title for a tech talk on AI or machine learning. Get weird and ridiculous with it."
       }, {
         role: "user",
-        content: "Generate a tech conference talk title"
+        content: `Generate a tech conference talk title for presentation ${presentationNumber}`
       }],
       temperature: 0.9,
     });
 
     const title = titleResponse.choices[0].message.content;
+    console.log(`Generated title for presentation ${presentationNumber}:`, title);
 
-    // Then, generate slide content based on the title
-    const slideContentResponse = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{
-        role: "system",
-        content: `You are a presentation content generator. Generate content for a slide in a tech talk titled "${title}". 
-                 Include: 
-                 1. A subtitle or key point (max 10 words)
-                 2. 2-3 bullet points (each max 15 words)
-                 3. A creative image description that matches the slide's content
-                 Format as JSON with keys: subtitle, bullets (array), imagePrompt`
-      }, {
-        role: "user",
-        content: "Generate slide content"
-      }],
-      temperature: 0.8,
-    });
+    // Generate full presentation structure
+    const presentationStructure = await generatePresentationStructure(title);
+    console.log('Generated presentation structure');
 
-    // Parse the generated content
-    const slideContent = JSON.parse(slideContentResponse.choices[0].message.content);
-
-    // Create and wait for the image prediction
-    let prediction;
-    try {
-      // Start the prediction
-      prediction = await replicate.predictions.create({
-        version: "black-forest-labs/flux-schnell",
-        input: {
-          prompt: slideContent.imagePrompt,
-          aspect_ratio: "16:9",
-          output_format: "webp",
-          output_quality: 90
-        }
-      });
-
-      console.log('Started image generation:', prediction.id);
-
-      // Wait for the prediction to complete
-      prediction = await waitForImageGeneration(prediction);
-
-      if (prediction.status === 'failed') {
-        throw new Error(`Image generation failed: ${prediction.error}`);
-      }
-
-      console.log('Image generation completed:', prediction.status);
-
-    } catch (replicateError) {
-      console.error('Replicate API error:', {
-        message: replicateError.message,
-        status: replicateError.response?.status,
-        details: replicateError.response?.data
-      });
-      throw new Error(`Replicate API error: ${replicateError.message}`);
-    }
-
-    // Get the image URL from the prediction output
-    const imageUrl = prediction.output;
+    // Generate images for all slides
+    const slides = await Promise.all(presentationStructure.slides.map(async (slide, index) => {
+      console.log(`Generating image for slide ${index + 1}`);
+      const imageUrl = await generateImage(slide.imagePrompt);
+      return {
+        ...slide,
+        imageUrl
+      };
+    }));
 
     return {
       statusCode: 200,
       body: JSON.stringify({
+        presentationNumber,
         title,
-        subtitle: slideContent.subtitle,
-        bullets: slideContent.bullets,
-        imagePrompt: slideContent.imagePrompt,
-        imageUrl: imageUrl
+        slides
       })
     };
   } catch (error) {

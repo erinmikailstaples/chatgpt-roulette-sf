@@ -122,3 +122,81 @@ async function fetchTalkTitle() {
 // Generate the slides based on query parameters
 const debouncedFetchSlides = debounce(fetchSlides, 300);
 debouncedFetchSlides();
+
+// Export the generatePresentation function
+export async function generatePresentation(presentationNumber) {
+  try {
+    const response = await fetch(`/.netlify/functions/aiService?presentation=${presentationNumber}`);
+    const data = await response.json();
+    
+    if (!data.slides || !data.title) {
+      throw new Error('Invalid presentation data received');
+    }
+
+    const slidesContainer = document.getElementById('autogenSlides');
+    slidesContainer.innerHTML = ''; // Clear existing slides
+
+    // Create title slide
+    const titleSlide = document.createElement('section');
+    titleSlide.innerHTML = `
+      <div class="slide-content" style="
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 80%;
+        margin: 0 auto;">
+        <h1 style="margin-bottom: 20px;">${data.title}</h1>
+        <h3 style="color: #8b5cf6;">AI-Generated Tech Talk</h3>
+      </div>`;
+
+    slidesContainer.appendChild(titleSlide);
+
+    // Create content slides
+    data.slides.forEach(slide => {
+      const section = document.createElement('section');
+      section.setAttribute('data-background-image', slide.imageUrl);
+      section.setAttribute('data-background-size', 'contain');
+      section.setAttribute('data-background-position', 'center');
+
+      const bulletPoints = slide.bullets
+        ? slide.bullets.map(bullet => `<li>${bullet}</li>`).join('')
+        : '';
+
+      section.innerHTML = `
+        <div class="slide-content" style="
+          background: rgba(0, 0, 0, 0.7);
+          padding: 20px;
+          border-radius: 10px;
+          max-width: 80%;
+          margin: 0 auto;">
+          <h2 style="margin-bottom: 10px;">${slide.subtitle}</h2>
+          <ul style="text-align: left; list-style-type: none;">
+            ${bulletPoints}
+          </ul>
+          <div class="desc">
+            <font size="3rem;" color="white">
+              AI-generated presentation slide
+            </font>
+          </div>
+        </div>`;
+
+      slidesContainer.appendChild(section);
+    });
+
+    // Sync Reveal.js
+    Reveal.sync();
+    Reveal.slide(0);
+
+    return true;
+  } catch (error) {
+    console.error('Error generating presentation:', error);
+    return false;
+  }
+}
+
+// Initialize when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  // Get presentation number from filename (e.g., index-1.html -> 1)
+  const presentationNumber = window.location.pathname.match(/index-(\d+)\.html/)?.[1] || '1';
+  generatePresentation(presentationNumber);
+});

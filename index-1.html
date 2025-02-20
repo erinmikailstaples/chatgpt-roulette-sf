@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>PPT Karaoke | AI Generator</title>
+		<title>AI Talk Generator - Presentation 1</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -70,77 +70,6 @@
 		<!-- Add the fullscreen plugin -->
 		<script src="plugin/fullscreen/fullscreen.js"></script>
 	<!-- Custom JS module for Unsplash integration -->
-		<script type="module">
-            import { generateSlideContent } from './index.js';
-
-            // Initialize Reveal.js with the fullscreen plugin
-            Reveal.initialize({
-                hash: true,
-                plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealFullscreen ],
-                width: '70%',
-                height: '100%',
-                margin: 0.1,
-                controls: true,
-                progress: true,
-                slideNumber: true,
-                keyboard: true,
-                overview: true,
-                center: true,
-                touch: true,
-                loop: false,
-                rtl: false,
-                shuffle: false,
-                fragments: true,
-                embedded: false,
-                help: true,
-                showNotes: false,
-                autoPlayMedia: null,
-                autoSlide: 0,
-                autoSlideStoppable: true,
-                mouseWheel: false,
-                hideAddressBar: true,
-                previewLinks: false,
-                fullscreen: {
-                    enabled: true,
-                    trigger: 70 // Press 'f' to go fullscreen
-                }
-            });
-
-            // Function to generate multiple slides
-            async function generatePresentation() {
-                const button = document.getElementById('generateButton');
-                const slidesContainer = document.getElementById('autogenSlides');
-                
-                // Disable button and show loading state
-                button.disabled = true;
-                button.classList.add('loading');
-                button.textContent = 'Generating...';
-                
-                try {
-                    // Clear existing slides
-                    slidesContainer.innerHTML = '';
-                    
-                    // Generate 11 slides
-                    for (let i = 0; i < 11; i++) {
-                        await generateSlideContent();
-                        await new Promise(resolve => setTimeout(resolve, 1000)); // Delay between slides
-                    }
-                    
-                    // Sync Reveal.js to show new slides
-                    Reveal.sync();
-                    Reveal.slide(0);
-                } catch (error) {
-                    console.error('Error generating presentation:', error);
-                } finally {
-                    // Reset button state
-                    button.disabled = false;
-                    button.classList.remove('loading');
-                    button.textContent = 'Generate New Presentation';
-                }
-            }
-
-            // Add click handler to the generate button
-            document.getElementById('generateButton').addEventListener('click', generatePresentation);
-        </script>
+		<script type="module" src="./index.js"></script>
 	</body>
 </html>
